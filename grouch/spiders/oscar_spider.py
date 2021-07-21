@@ -98,7 +98,6 @@ class OscarSpider(scrapy.Spider):
         loader.add_value('term', body.css('td::text').re(r'Associated Term'))
         loader.add_value('campus', body.css('td::text').re(r'Undergraduate Semester \n(.*)\n'))
         loader.add_value('labs', body.css('td::text')[0].re(r'[A-Z]\d+'))
-        print(body.css('td::text').re(r'Undergraduate Semester \n(.*)\n'))
         meetings = []
         instructors = set()
 
