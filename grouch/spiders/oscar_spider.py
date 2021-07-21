@@ -41,7 +41,7 @@ class OscarSpider(scrapy.Spider):
         subjects = response.css("#subj_id option::attr(value)").re(".*")
         if grouch.settings.SUBJECTS:
             subjects = grouch.settings.SUBJECTS
-        for subject in subjects[:1]:  # subjects:
+        for subject in subjects:  # subjects:
             yield scrapy.FormRequest.from_response(response,
                                                    callback=self.parse_courses,
                                                    formdata={"sel_subj": ["dummy", subject]})
@@ -50,7 +50,7 @@ class OscarSpider(scrapy.Spider):
         # titles = response.css(".nttitle a::text").re(".*")
         urls = response.css("td.nttitle a::attr(href)").re(".*detail.*")
         # only pulls urls for course pages
-        for url in urls[:3]:
+        for url in urls:
             yield scrapy.Request(self.base+url, self.parse_detail)
 
     def parse_detail(self, response):
