@@ -16,15 +16,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-    - name: Install dependencies
-      run: |
-        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+#     - name: Set up Python 3.9
+#       uses: actions/setup-python@v2
+#       with:
+#         python-version: 3.9
+#     - name: Install dependencies
+#       run: |
+#         if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
     - name: Run Crawler
       env:
-        MONGODB_PASS: ${{ secrets.MONGODB_PASS }}
+        MONGODB_PASS: "Hello, world" #${{ secrets.MONGODB_PASS }}
       run: |
-        scrapy crawl oscar
+        echo "$MONGODB_PASS"
