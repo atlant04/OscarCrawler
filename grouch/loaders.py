@@ -39,5 +39,8 @@ class SectionLoader(scrapy.loader.ItemLoader):
     meetings_in = Identity()
     meetings_out = Identity()
 
+    labs_in = Identity()
+    labs_out = Identity()
+
     instructors_in = Identity()
     instructors_out = Identity()

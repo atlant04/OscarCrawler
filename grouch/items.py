@@ -38,4 +38,5 @@ class Section(scrapy.Item):
     campus = scrapy.Field()  # Georgia Tech-Atlanta * Campus
     meetings = scrapy.Field()  # json structure represeting meeting times
     instructors = scrapy.Field()  # list of instructors
+    labs = scrapy.Field()
 

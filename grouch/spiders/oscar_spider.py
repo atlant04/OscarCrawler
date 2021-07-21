@@ -1,3 +1,4 @@
+from json import load
 import scrapy
 from grouch.loaders import CourseLoader, SectionLoader
 import grouch
@@ -18,6 +19,8 @@ class OscarSpider(scrapy.Spider):
         "Corequisites": 'corequisites'
     }
 
+    term = None
+
     def parse(self, response):
         return self.parse_catalog(response)
 
@@ -28,6 +31,7 @@ class OscarSpider(scrapy.Spider):
         terms = [term for term in terms if
                 term.endswith(grouch.settings.SEMESTER_ACCEPT)]
         for term in terms[:grouch.settings.SEMESTER_STOP]:
+            self.term = term
             self.semester, _, self.year = term.partition(" ")
             yield scrapy.FormRequest.from_response(response,
                                                    callback=self.parse_term,
@@ -37,7 +41,7 @@ class OscarSpider(scrapy.Spider):
         subjects = response.css("#subj_id option::attr(value)").re(".*")
         if grouch.settings.SUBJECTS:
             subjects = grouch.settings.SUBJECTS
-        for subject in subjects:  # subjects:
+        for subject in subjects[:1]:  # subjects:
             yield scrapy.FormRequest.from_response(response,
                                                    callback=self.parse_courses,
                                                    formdata={"sel_subj": ["dummy", subject]})
@@ -46,7 +50,7 @@ class OscarSpider(scrapy.Spider):
         # titles = response.css(".nttitle a::text").re(".*")
         urls = response.css("td.nttitle a::attr(href)").re(".*detail.*")
         # only pulls urls for course pages
-        for url in urls:
+        for url in urls[:3]:
             yield scrapy.Request(self.base+url, self.parse_detail)
 
     def parse_detail(self, response):
@@ -93,8 +97,11 @@ class OscarSpider(scrapy.Spider):
         loader.add_value('crn', header.re(r' - (\d{5}) - '))
         loader.add_value('term', body.css('td::text').re(r'Associated Term'))
         loader.add_value('campus', body.css('td::text').re(r'Undergraduate Semester \n(.*)\n'))
+        loader.add_value('labs', body.css('td::text')[0].re(r'[A-Z]\d+'))
+        print(body.css('td::text').re(r'Undergraduate Semester \n(.*)\n'))
         meetings = []
         instructors = set()
+
         for row in body.css('tr')[2:]:
             blocks = row.css('td.dddefault')
             meet = dict()

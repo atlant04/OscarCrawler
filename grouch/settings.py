@@ -18,7 +18,7 @@ NEWSPIDER_MODULE = 'grouch.spiders'
 # -1 for all of them
 SEMESTER_STOP = 1
 # empty for all of them
-SUBJECTS = ['CS']
+SUBJECTS = ['BIOS']
 SEMESTER_ACCEPT = ("02", "08", "05")  # Has to be a tuple
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -67,9 +67,9 @@ SEMESTER_ACCEPT = ("02", "08", "05")  # Has to be a tuple
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'grouch.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'grouch.pipelines.MongoPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
