@@ -17,6 +17,7 @@ class MongoPipeline:
 
     def open_spider(self, spider):
         mongo_pass = config("MONGODB_PASS")
+        print(mongo_pass)
         self.file = open('data.json', 'w')
         self.client = MongoClient(f'mongodb+srv://admin:{mongo_pass}@oscar.ima5l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 
