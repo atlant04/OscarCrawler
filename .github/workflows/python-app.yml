@@ -30,4 +30,4 @@ jobs:
         if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
     - name: Run Crawler
       run: |
-        scrapy crawl grouch
+        scrapy crawl oscar
