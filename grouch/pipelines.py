@@ -3,7 +3,7 @@ from itemadapter import ItemAdapter
 import json 
 import os
 from pymongo import MongoClient
-from decouple import config
+from dotenv import load_dotenv
 
 class MongoPipeline:
 
@@ -16,8 +16,9 @@ class MongoPipeline:
         self.client.test[spider.term].insert_one(dict)
 
     def open_spider(self, spider):
-        mongo_pass = config("MONGODB_PASS") #os.environ['MONGODB_PASS']
-        print(mongo_pass)
+        load_dotenv()
+        print(os.environ)
+        mongo_pass = os.getenv("MONGODB_PASS")
         self.file = open('data.json', 'w')
         self.client = MongoClient(f'mongodb+srv://admin:{mongo_pass}@oscar.ima5l.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 
