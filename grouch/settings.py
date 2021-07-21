@@ -18,7 +18,7 @@ NEWSPIDER_MODULE = 'grouch.spiders'
 # -1 for all of them
 SEMESTER_STOP = 1
 # empty for all of them
-# SUBJECTS = ['BIOS']
+SUBJECTS = []
 SEMESTER_ACCEPT = ("02", "08", "05")  # Has to be a tuple
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
